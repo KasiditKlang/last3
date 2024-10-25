@@ -1,0 +1,12 @@
+[
+    { "name": "ผัดไท", "image": "/outputs/padthai.jpg", "probability": 1 },
+    { "name": "ตำไทย", "image": "/outputs/som_tum.jpg", "probability": 1 },
+    { "name": "ต้มยำกุ้ง", "image": "/outputs/tom_yum_goong.jpg", "probability": 1 },
+    { "name": "แกงเขียวหวาน", "image": "/outputs/gaeng_keow_wan.jpg", "probability": 1 },
+    { "name": "หมูทอดกระเทียม", "image": "/outputs/moo_tod_garlic.jpg", "probability": 1 },
+    { "name": "กะเพราทะเล", "image": "/outputs/kaprao_sea.jpg", "probability": 1 },
+    { "name": "ผัดพริกแกงไก่", "image": "/outputs/pad_prik_gang.jpg", "probability": 1 },
+    { "name": "ปูผัดผงกะหรี่", "image": "/outputs/pad_pong_gari.jpg", "probability": 1 },
+    { "name": "ผัดผัก", "image": "/outputs/pad_pak.jpg", "probability": 1 },
+    { "name": "ผัดพริกเผาหมูกรอบ", "image": "/outputs/stir-fried-porkpadprikpao.jpg", "probability": 1 }
+]

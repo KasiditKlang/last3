@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Meal Generator</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #ff6347;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .app-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .meal-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 15px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .random-btn, .add-btn, .confirm-btn {
+            padding: 10px 20px;
+            background-color: #ff6347;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .random-btn:hover, .add-btn:hover, .confirm-btn:hover {
+            background-color: #ff4500;
+        }
+
+        .confirm-btn {
+            display: none; /* Hidden initially */
+        }
+
+        /* Add Menu Form */
+        .add-menu-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .add-menu-form input[type="text"],
+        .add-menu-form input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .add-menu-form button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-menu-form button:hover {
+            background-color: #45a049;
+        }
+
+        .add-menu-form label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Meal History */
+        .history-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .history-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-list li {
+            padding: 10px;
+            background-color: #f5f5f5;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1 id="meal-name">Click to Randomize</h1>
+        <img id="meal-image" src="https://via.placeholder.com/500x500" alt="Meal Image" class="meal-image">
+        <div class="button-container">
+            <button class="random-btn" onclick="randomMeal()">Randomize</button>
+            <button class="confirm-btn" id="confirm-btn" onclick="confirmMeal()">Confirm</button>
+            <button class="add-btn" onclick="toggleAddMenuForm()">Add Meal</button>
+        </div>
+        <div class="add-menu-form" id="add-menu-form">
+            <label for="meal-name-input">Food Name:</label>
+            <input type="text" id="meal-name-input" placeholder="Enter meal name">
+            <label for="meal-image-input">Upload Image:</label>
+            <input type="file" id="meal-image-input" accept="image/*">
+            <button onclick="addCustomMeal()">Add Menu</button>
+        </div>
+    </div>
+
+    <div class="history-container">
+        <h2>Meal History</h2>
+        <ul id="history-list" class="history-list"></ul>
+    </div>
+
+    <script>
+        let meals = [];
+
+        async function loadMeals() {
+            try {
+                const response = await fetch('/meals');  // Fetch meals from the backend
+                meals = await response.json();  // Parse the response to JSON
+                console.log('Meals loaded:', meals);  // Log loaded meals for debugging
+                
+                // Display the first meal if available
+                if (meals.length > 0) {
+                    displayMeal(meals[0]);
+                }
+            } catch (error) {
+                console.error('Error loading meals:', error);
+            }
+        }
+
+
+        function randomMeal() {
+            if (meals.length > 0) {
+                const randomIndex = Math.floor(Math.random() * meals.length);
+                displayMeal(meals[randomIndex]);
+                document.getElementById('confirm-btn').style.display = 'inline';
+            } else {
+                console.log('No meals available to randomize');
+            }
+        }
+
+
+        function displayMeal(meal) {
+            document.getElementById('meal-name').innerText = meal.name;
+            console.log("Image URL: " + meal.image);  // Debug: Log the image URL
+            document.getElementById('meal-image').src = meal.image;
+        }
+
+
+        function confirmMeal() {
+            const mealName = document.getElementById('meal-name').innerText;
+            const historyList = document.getElementById('history-list');
+            const listItem = document.createElement('li');
+            listItem.innerText = mealName;
+            historyList.appendChild(listItem);
+        }
+
+        function toggleAddMenuForm() {
+            const form = document.getElementById('add-menu-form');
+            form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function addCustomMeal() {
+            const mealNameInput = document.getElementById('meal-name-input').value;
+            const mealImageInput = document.getElementById('meal-image-input').files[0];
+
+            if (mealNameInput && mealImageInput) {
+                const formData = new FormData();
+                formData.append('name', mealNameInput);
+                formData.append('image', mealImageInput);
+
+                fetch('/meals', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Meal added successfully!');
+                    document.getElementById('meal-name-input').value = '';
+                    document.getElementById('meal-image-input').value = '';
+                    toggleAddMenuForm();
+                    loadMeals(); // Reload meals to show the newly added one
+                })
+                .catch(error => {
+                    console.error('Error adding meal:', error);
+                });
+            } else {
+                alert('Please enter a meal name and upload an image.');
+            }
+        }
+
+        window.onload = loadMeals;
+    </script>
+</body>
+</html>

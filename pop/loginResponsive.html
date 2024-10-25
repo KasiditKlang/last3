@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Include Istok Web font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('pic/bgLogin.png'); /* Replace with actual image path */
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Istok Web', sans-serif;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            position: absolute; /* Enables positioning control */
+            top: 60px; /* Adjust this value to control the top offset */
+            left: 30%; /* Center horizontally */
+            transform: translateX(-50%); /* Center the container */
+        }
+
+        .logo img {
+            width: 100px; /* Adjust the size of the logo */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .welcome-message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .sub-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .container label {
+            font-size: 14px;
+            color: #333;
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .container input {
+            width: 80%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .container input:focus {
+            border-color: #FFA733;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .checkbox-wrapper .left {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(0.5); /* Adjust checkbox size */
+        }
+
+        .signin-button {
+            background-color: #FFA733;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 60%;
+            margin-bottom: 10px;
+        }
+
+        .signin-button:hover {
+            background-color: #ff8a00;
+        }
+
+        .text-control-input {
+            padding-left: 30px;
+        }
+
+        .or-text {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .google-signin-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 60%;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .google-signin-button img {
+            margin-right: 10px;
+            width: 25px; /* Adjust the size of the logo */
+            height: auto;
+        }
+
+        .register {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .register a {
+            color: #0046DC;
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            color: #0046DC;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: -10px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo at the top -->
+        <div class="logo">
+            <img src="pic/Logo.png" alt="Logo"> <!-- Replace with actual logo image path -->
+        </div>
+        <!-- Welcome Message -->
+        <div class="welcome-message">Welcome!</div>
+        <div class="sub-message">Sign in to your account</div>
+
+        <!-- User form -->
+        <form class="user">
+            <label for="fname" class="text-control-input">User:</label>
+            <input type="text" id="fname" name="fname" placeholder="Enter User name">
+
+            <label for="lname" class="text-control-input">Password:</label>
+            <input type="password" id="lname" name="lname" placeholder="Enter password">
+
+            <div class="checkbox-wrapper">
+                <div class="left">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label> <!-- Removed the <p> tag here -->
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+        </form>
+
+        <!-- Sign In button -->
+        <button class="signin-button">SIGN IN</button>
+
+        <!-- OR separator -->
+        <p class="or-text">--------------------OR--------------------</p>
+
+        <!-- Sign in with Google button -->
+        <button class="google-signin-button">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo"> Sign in with Google
+        </button>
+
+        <!-- Register section -->
+        <div class="register">
+            <p>No register yet? <a href="signup.html" class="get-started">Get started</a></p>
+        </div>
+    </div>
+</body>
+</html>

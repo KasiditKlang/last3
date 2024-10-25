@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <!-- Include Istok Web font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(pic/bgSignUp.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .user {
+            position: absolute;
+            left: 350px;
+            top: 285px;
+        }
+        #fname, #lname {
+            width: 250px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(217, 217, 217, 0.50);
+            margin-bottom: 5px; /* Reduced margin-bottom */
+            border: 2px solid;
+            outline: none;
+            padding-left: 10px;
+            font-size: 16px;
+            font-family: "Istok Web", sans-serif;
+            color: #333;
+        }
+        #lname,#fname {
+            border-color: #000000;
+        }
+        #fname:focus,#lname:focus {
+            border-color: #0046DC !important;
+        }
+        #textLogin{
+            font-family: "Istok Web";
+        }
+        /* Placeholder styling */
+        ::placeholder {
+            color: #999;
+            font-family: "Istok Web", sans-serif;
+        }
+        .signup-button {
+            background-color: #FFA733; /* Similar to the orange color in the image */
+            color: rgb(0, 0, 0);
+            font-size: 18px;
+            padding: 12px 45px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+            transition: box-shadow 0.3s ease;
+            position: absolute;
+            left: 406px;
+            top: 520px;
+        }
+
+        .signup-button:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <form class="user">
+        <label for="fname">User:</label><br>
+        <input type="text" id="fname" name="fname" placeholder="Enter User name"><br>
+        <label for="lname">Password:</label><br>
+        <input type="password" id="lname" name="lname" placeholder="Enter password"><br>
+        <label for="lname">Confirm Password:</label><br>
+        <input type="password" id="lname" name="lname" placeholder="Enter password"><br>
+        
+    </form>
+    <button class="signup-button">SIGN UP</button>
+</body>
+</html>

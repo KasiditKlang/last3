@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Include Istok Web font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url(pic/bg2.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .user {
+            position: absolute;
+            left: 350px;
+            top: 300px;
+        }
+        #fname, #lname {
+            width: 250px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(217, 217, 217, 0.50);
+            margin-bottom: 5px; /* Reduced margin-bottom */
+            border: 2px solid;
+            outline: none;
+            padding-left: 10px;
+            font-size: 16px;
+            font-family: "Istok Web", sans-serif;
+            color: #333;
+        }
+        #lname,#fname {
+            border-color: #000000;
+        }
+        #fname:focus,#lname:focus {
+            border-color: #0046DC !important;
+        }
+        #textLogin{
+            font-family: "Istok Web";
+        }
+        /* Placeholder styling */
+        ::placeholder {
+            color: #999;
+            font-family: "Istok Web", sans-serif;
+        }
+        /* Styles for the checkbox and its label */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            margin-top: 0; /* Removed margin-top */
+        }
+        .checkbox-wrapper input[type="checkbox"] {
+            transform: scale(1.5); /* Increases the size to 150% */
+            margin-right: 10px;
+        }
+        .checkbox-wrapper label {
+            font-family: "Istok Web", sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+        .forgot-password {
+            font-family: "Istok Web", sans-serif;
+            font-size: 14px;
+            color: #0046DC; /* สีลิงก์ */
+            text-decoration: none; /* เอาเส้นใต้ลิงก์ออก */
+            margin-left: 40px;
+        }
+        .forgot-password:hover {
+            text-decoration: underline; /* เพิ่มเส้นใต้เมื่อชี้เมาส์ */
+        }
+        .signin-button {
+            background-color: #FFA733; /* Similar to the orange color in the image */
+            color: rgb(0, 0, 0);
+            font-size: 18px;
+            padding: 12px 45px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+            transition: box-shadow 0.3s ease;
+            position: absolute;
+            left: 406px;
+            top: 470px;
+        }
+
+        .signin-button:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+        }
+        .or-text {
+            margin-top: 20px;
+            font-family: "Istok Web", sans-serif;
+            font-size: 16px;
+            color: #333;
+            position: absolute;
+            left: 370px;
+            top: 505px;
+        }
+        .google-button {
+            background-color: #fff;
+            color: #444;
+            font-size: 16px;
+            padding: 12px 45px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            position: absolute;
+            left: 350px;
+            top: 555px; /* ปรับตำแหน่งให้อยู่ใต้ข้อความ OR */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .google-button:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .google-logo {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .register {
+            position: absolute;
+            left: 397px;
+            top: 600px;
+        }
+        
+    </style>
+</head>
+<body>
+    <form class="user">
+        <label for="fname">User:</label><br>
+        <input type="text" id="fname" name="fname" placeholder="Enter User name"><br>
+        <label for="lname">Password:</label><br>
+        <input type="password" id="lname" name="lname" placeholder="Enter password"><br>
+        <!-- Checkbox input -->
+        <div class="checkbox-wrapper">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+        <a href="#" class="forgot-password">Forgot password</a>
+    </div>
+        
+    </form>
+    <button class="signin-button">SIGN IN</button>
+    <p class="or-text">--------------------OR--------------------</p>
+    <button class="google-button">
+    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="google-logo">
+    Sign in with Google
+    </button>
+
+    <div class="register">
+        <p>No register yet ? <a href="signup.html" class="get-started">Get started</a></p>
+    </div>
+</body>
+</html>
