@@ -12,7 +12,7 @@ app.get('/data.json', (req, res) => {
 
 // Serve the HTML file
 app.get('*', (req, res) => {
-    res.sendFile('rndFood.html', {root: 'public'});
+    res.sendFile('loginResponsive.html', {root: 'public'});
   });
 
 // Start the server
