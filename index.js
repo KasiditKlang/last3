@@ -7,13 +7,16 @@ const cors = require('cors');
 const { ObjectId } = require('mongodb');
 require('dotenv').config();
 const authenticateToken = require('./middleware/auth');
-
+const corsOptions = {
+    origin: 'https://vercel.com/api/toolbar/link/last3.vercel.app?via=project-dashboard-alias-list&p=1&page=/',
+    credentials: true, // Allow sending cookies and credentials
+};
 
 const app = express();
 // Increase payload size limit to handle large image uploads
 app.use(express.json({ limit: '10mb' }));  // Adjust the limit as needed
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static('public'));
 
 // User and Meal models
