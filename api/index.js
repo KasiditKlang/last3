@@ -6,33 +6,19 @@ const path = require('path');
 const cors = require('cors');
 const { ObjectId } = require('mongodb');
 require('dotenv').config();
-const authenticateToken = require('./middleware/auth');
+const authenticateToken = require('../middleware/auth');
 
 
 const app = express();
-
-// Allow CORS for local and production environments
-const allowedOrigins = [
-    'http://localhost:3000', 
-    'https://vercel.com/api/toolbar/link/project-rndfood-gf9b.vercel.app?via=project-dashboard-alias-list&p=1&page=/' // Replace with your Vercel frontend URL
-  ];
-
-  app.use(
-    cors({
-      origin: allowedOrigins,
-      credentials: true, // Allow credentials such as cookies or Authorization headers
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-    })
-  );
 // Increase payload size limit to handle large image uploads
 app.use(express.json({ limit: '10mb' }));  // Adjust the limit as needed
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-app.use(express.static('public'));
+app.use(cors());
+app.use(express.static(path.join(__dirname, '../public')));
 
 // User and Meal models
-const User = require('./models/User'); // Ensure this file exists with the correct schema
-const Meal = require('./models/Meals'); // Create this schema for meals
+const User = require('../models/User'); // Ensure this file exists with the correct schema
+const Meal = require('../models/Meals'); // Create this schema for meals
 
 
 // เชื่อมต่อ MongoDB
@@ -42,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 // Route สำหรับ API
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
     const { username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -55,7 +41,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
 
@@ -176,12 +162,12 @@ app.get('/api/history', authenticateToken, async (req, res) => {
 
 // กำหนด Route สำหรับหน้าเว็บ (กรณีเข้าถึงจาก /)
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/loginResponsive.html');
+    res.sendFile(path.join(__dirname, '../public/loginResponsive.html'));
 });
 
 // **Serve other static pages**
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'loginResponsive.html'));
+    res.sendFile(path.join(__dirname, '../public/loginResponsive.html'));
 });
 
 
