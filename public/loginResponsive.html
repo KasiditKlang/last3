@@ -191,9 +191,15 @@
     </style>
 
     <script>
+// Use dynamic API URLs
+const apiUrl = 
+  window.location.hostname.includes('localhost')
+    ? 'http://localhost:3000'
+    : 'https://vercel.com/api/toolbar/link/project-rndfood-gf9b.vercel.app?via=project-dashboard-alias-list&p=1&page=/'; // Adjust for Vercel
+    
         async function loginUser(username, password) {
     try {
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch(`${apiUrl}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
