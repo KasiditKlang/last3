@@ -1,447 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Meal Generator</title>
-    <link rel="stylesheet" href="/style.css">
+    <!-- <link rel="stylesheet" href="/style.css"> -->
     <style>
-        /* Global Styles */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    
-        /* Navbar Styles */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #ff6f61;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-    
-        nav h2 {
-            color: white;
-            margin: 0;
-            font-weight: 700;
-            font-size: 24px;
-        }
-    
-        nav button {
-            background-color: white;
-            color: #ff6f61;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            margin-right: 2%;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-    
-        nav button:hover {
-            background-color: #ff3f3f;
-            color: white;
-        }
-    
-        /* Container for Meal Generator and Meal History */
-        .content-container {
-            display: flex;
-            gap: 20px;
-            margin-top: 80px; /* Adjust spacing from the navbar */
-        }
-    
-        .app-container {
-            background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 450px;
-            padding: 30px;
-            text-align: center;
-        }
-    
-        h1 {
-            font-weight: 700;
-            color: #ff6f61;
-            margin-bottom: 10px;
-        }
-    
-        /* Meal image styling to ensure consistency */
-        .meal-image {
-            border-radius: 15px;
-            margin: 20px 0;
-            width: 300px; /* Fixed width */
-            height: 200px; /* Fixed height */
-            object-fit: cover; /* Ensures the image fits nicely without distortion */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-    
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-    
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 30px;
-            background-color: #ff6f61;
-            color: white;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-    
-        .btn:hover {
-            background-color: #ff3f3f;
-        }
-    
-        .confirm-container {
-            margin-top: 10px;
-        }
-    
-        /* Confirm button with green background */
-        #confirm-btn {
-            background-color: #4CAF50; /* Green background color */
-        }
-    
-        #confirm-btn:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
-    
-        .add-menu-form {
-            display: none;
-            margin-top: 20px;
-            flex-direction: column;
-            gap: 10px;
-        }
-    
-        .add-menu-form input {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            width: 100%;
-        }
-    
-        .add-menu-form button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-    
-        .add-menu-form button:hover {
-            background-color: #45a049;
-        }
-    
-        /* History container styling */
-        .history-container {
-            padding: 15px;
-            border-radius: 15px;
-            background-color: #f9f9f9;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            height: fit-content;
-        }
-    
-        .history-container h2 {
-            color: #ff6f61;
-            margin-bottom: 15px;
-            font-weight: 600;
-            text-align: center;
-        }
-    
-        .history-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            max-height: 400px; /* Set a fixed maximum height to the history list */
-            overflow-y: auto; /* Enable vertical scrolling when content overflows */
-        }
-    
-        .history-list li {
-            padding: 10px;
-            background-color: #fff;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    
-        .history-list li span {
-            font-weight: 500;
-            color: #333;
-        }
-    
-        .history-list li button {
-            background-color: #ff3f3f; /* Red background color */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-    
-        .history-list li button:hover {
-            background-color: #cc0000; /* Darker red on hover */
-        }
-    
-        .meal-image-history {
-            width: 200px;
-            height: 100px;
-            border-radius: 8px;
-            margin-top: 5px;
-            object-fit: cover; /* Ensures the image fits nicely without distortion */
-        }
-    
-        .meal-details {
-            flex-direction: column;
-            align-items: left;
-            gap: 5px; /* Space between name, timestamp, and image */
-        }
-    </style>
-    
-</head>
-<body>
+      /* Global Styles */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
+      /* Navbar Styles */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #ff6f61;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav h2 {
+        color: white;
+        margin: 0;
+        font-weight: 700;
+        font-size: 24px;
+      }
+
+      nav button {
+        background-color: white;
+        color: #ff6f61;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        margin-right: 2%;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      nav button:hover {
+        background-color: #ff3f3f;
+        color: white;
+      }
+
+      /* Container for Meal Generator and Meal History */
+      .content-container {
+        display: flex;
+        gap: 20px;
+        margin-top: 80px; /* Adjust spacing from the navbar */
+      }
+
+      .app-container {
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 450px;
+        padding: 30px;
+        text-align: center;
+      }
+
+      h1 {
+        font-weight: 700;
+        color: #ff6f61;
+        margin-bottom: 10px;
+      }
+
+      /* Meal image styling to ensure consistency */
+      .meal-image {
+        border-radius: 15px;
+        margin: 20px 0;
+        width: 300px; /* Fixed width */
+        height: 200px; /* Fixed height */
+        object-fit: cover; /* Ensures the image fits nicely without distortion */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 30px;
+        background-color: #ff6f61;
+        color: white;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #ff3f3f;
+      }
+
+      .confirm-container {
+        margin-top: 10px;
+      }
+
+      /* Confirm button with green background */
+      #confirm-btn {
+        background-color: #4caf50; /* Green background color */
+      }
+
+      #confirm-btn:hover {
+        background-color: #45a049; /* Darker green on hover */
+      }
+
+      .add-menu-form {
+        display: none;
+        margin-top: 20px;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .add-menu-form input {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .add-menu-form button {
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .add-menu-form button:hover {
+        background-color: #45a049;
+      }
+
+      /* History container styling */
+      .history-container {
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        border-radius: 15px;
+        background-color: #f9f9f9;
+        justify-content: center; /* Center content vertically */
+        align-items: center; /* Center content horizontally */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        height: fit-content;
+      }
+
+      .history-container h2 {
+        color: #ff6f61;
+        margin-bottom: 15px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .history-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 400px; /* Set a fixed maximum height to the history list */
+        overflow-y: auto; /* Enable vertical scrolling when content overflows */
+      }
+
+      .history-list li {
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+    text-align: center;
+}
+
+      .history-list li span {
+        font-weight: 500;
+        color: #333;
+      }
+
+      .history-list li button {
+        background-color: #ff3f3f; /* Red background color */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .history-list li button:hover {
+        background-color: #cc0000; /* Darker red on hover */
+      }
+      .meal-history-item {
+    width: 100%;
+    position: relative; /* Enable absolute positioning for the delete button */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff3f3f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+
+.meal-image-history {
+    width: 200px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.meal-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.meal-name {
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+}
+.meal-timestamp {
+    font-size: 14px;
+    color: gray;
+}
+
+      .meal-details {
+        flex-direction: column;
+        align-items: left;
+        gap: 5px; /* Space between name, timestamp, and image */
+      }
+    </style>
+  </head>
+  <body>
     <!-- Navbar -->
     <nav>
         <h2>DOM FOOD</h2>
+        <button onclick="window.location.href='deleteMenu.html'">Delete Menu</button>
         <button onclick="logout()">Logout</button>
     </nav>
 
     <!-- Container for the app and history side by side -->
     <div class="content-container">
-        <div class="app-container">
-            <h1 id="meal-name">Click to Randomize</h1>
-            <img id="meal-image" src="outputs/logo.png" alt="Meal Image" class="meal-image">
+      <div class="app-container">
+        <h1 id="meal-name">Click to Randomize</h1>
+        <img
+          id="meal-image"
+          src="outputs/logo.png"
+          alt="Meal Image"
+          class="meal-image"
+        />
 
-            <div class="button-container">
-                <button class="btn" onclick="randomMeal()">Randomize</button>
-                <button class="btn" onclick="toggleAddMenuForm()">Add Meal</button>
-            </div>
-
-            <div class="confirm-container">
-                <!-- Confirm button with green color -->
-                <button class="btn" id="confirm-btn" onclick="confirmMeal()" style="display: none;">Confirm</button>
-            </div>
-
-            <div class="add-menu-form" id="add-menu-form">
-                <input type="text" id="meal-name-input" placeholder="Enter meal name" />
-                <input type="file" id="meal-image-input" accept="image/*" />
-                <button onclick="addCustomMeal()">Add to Menu</button>
-            </div>
+        <div class="button-container">
+          <button class="btn" onclick="randomMeal()">Randomize</button>
+          <button class="btn" onclick="toggleAddMenuForm()">Add Meal</button>
         </div>
 
-        <div class="history-container">
-            <h2>Meal History</h2>
-            <ul id="history-list" class="history-list"></ul>
+        <div class="confirm-container">
+          <!-- Confirm button with green color -->
+          <button
+            class="btn"
+            id="confirm-btn"
+            onclick="confirmMeal()"
+            style="display: none"
+          >
+            Confirm
+          </button>
         </div>
+
+        <div class="add-menu-form" id="add-menu-form">
+          <input
+            type="text"
+            id="meal-name-input"
+            placeholder="Enter meal name"
+          />
+          <input type="file" id="meal-image-input" accept="image/*" />
+          <button onclick="addCustomMeal()">Add to Menu</button>
+        </div>
+      </div>
+
+      <!-- History container styling -->
+<div class="history-container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Meal History</h2>
     </div>
+    <ul id="history-list" class="history-list"></ul>
+</div>
 
 
     <!-- Updated JS path -->
-    <script>
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "loginResponsive.html";
-    }
-
-    function logout() {
-        localStorage.removeItem("isLoggedIn");
-        alert("You have logged out!");
-        window.location.href = "loginResponsive.html";
-    }
-        let meals = [];
-let currentMeal = null;
-
-// Function to fetch meal data from data.json
-async function loadMeals() {
-    try {
-        const response = await fetch('/data.json'); // Ensure the path is correct
-        if (!response.ok) throw new Error('Failed to load data.json');
-        meals = await response.json();
-        loadProbabilities(); // Load stored probabilities after fetching meals
-    } catch (error) {
-        console.error('Error loading meals:', error);
-    }
-}
-
-// Function to randomize meal
-function randomMeal() {
-    if (meals.length === 0) return; // Ensure meals are loaded
-    const totalWeight = meals.reduce((sum, meal) => sum + meal.probability, 0);
-    let random = Math.random() * totalWeight;
-    for (const meal of meals) {
-        if (random < meal.probability) {
-            currentMeal = meal;
-            document.getElementById("meal-name").textContent = meal.name;
-            document.getElementById("meal-image").src = meal.image;
-            document.getElementById("confirm-btn").style.display = "inline-block"; // Show Confirm button
-
-            // Hide Add Meal form if it is open
-            hideAddMenuForm();
-
-            return;
-        }
-        random -= meal.probability;
-    }
-}
-function addCustomMeal() {
-    const mealNameInput = document.getElementById("meal-name-input").value;
-    const mealImageInput = document.getElementById("meal-image-input").files[0];
-
-    if (mealNameInput && mealImageInput) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            // Add the new meal to the list of meals
-            meals.push({
-                name: mealNameInput,
-                image: e.target.result,
-                probability: 1 // New meal starts with normal probability
-            });
-            
-            // Show the new meal details (name and image) on the page
-            document.getElementById("meal-name").textContent = mealNameInput;
-            document.getElementById("meal-image").src = e.target.result;
-
-            // Show the Confirm button for the new meal
-            currentMeal = meals[meals.length - 1]; // Set currentMeal to the newly added meal
-            document.getElementById("confirm-btn").style.display = "inline-block"; // Show Confirm button
-
-            // Show a success message
-            alert("Meal added successfully!");
-
-            // Reset the form inputs
-            document.getElementById("meal-name-input").value = "";
-            document.getElementById("meal-image-input").value = "";
-
-            // Hide the add meal form
-            toggleAddMenuForm();
-        };
-        reader.onerror = function() {
-            alert("Error reading file.");
-        };
-        reader.readAsDataURL(mealImageInput);
-    } else {
-        alert("Please enter a meal name and upload an image.");
-    }
-}
-
-// Function to confirm meal
-function confirmMeal() {
-    if (currentMeal) {
-        addToHistory(currentMeal);
-        decreaseProbability(currentMeal);
-
-        document.getElementById("confirm-btn").style.display = "none"; // Hide Confirm button after confirming
-        currentMeal = null;
-
-        // Hide Add Meal form if it is open
-        hideAddMenuForm();
-    }
-}
-
-// Function to hide Add Menu form
-function hideAddMenuForm() {
-    const form = document.getElementById("add-menu-form");
-    form.style.display = "none"; // Hide the form
-}
-
-// Toggle function to add or hide menu form
-function toggleAddMenuForm() {
-    const form = document.getElementById("add-menu-form");
-    form.style.display = form.style.display === "flex" ? "none" : "flex";
-}
-
-function addToHistory(meal) {
-    const historyList = document.getElementById("history-list");
-    const timestamp = new Date().toLocaleString();
-    const newItem = document.createElement("li");
-    newItem.className = "history-item";
-
-    // Create the structure with the meal name, timestamp, and image below
-    newItem.innerHTML = `
-        <div class="meal-details">
-            <span class="meal-name">${meal.name}</span>
-            <small class="meal-timestamp" style="color:gray;">(${timestamp})</small>
-            ${meal.image ? 
-                `<a href="${meal.image}" target="_blank">
-                    <img src="${meal.image}" alt="${meal.name}" class="meal-image-history" />
-                </a>` 
-                : 
-                `<a href="#" target="_blank">
-                    <img src="https://via.placeholder.com/50" alt="No Image" class="meal-image-history" />
-                </a>`
-            }
-        </div>
-        <button class="remove-btn" onclick="removeMeal(this)">Remove</button>
-    `;
-
-    // Prepend the new item so it shows up at the top
-    historyList.insertBefore(newItem, historyList.firstChild);
-}
-
-
-function decreaseProbability(meal) {
-    meal.probability *= 0.8; // Decrease by 80%
-    saveProbabilities();
-}
-
-function saveProbabilities() {
-    const mealsData = meals.map(meal => ({
-        name: meal.name,
-        probability: meal.probability,
-        lastConfirmed: Date.now()
-    }));
-    localStorage.setItem('meals', JSON.stringify(mealsData));
-}
-
-function loadProbabilities() {
-    const storedMeals = JSON.parse(localStorage.getItem('meals'));
-    if (storedMeals) {
-        storedMeals.forEach(storedMeal => {
-            const meal = meals.find(m => m.name === storedMeal.name);
-            if (meal) {
-                meal.probability = storedMeal.probability;
-                const oneWeek = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
-                const timeSinceLastConfirmed = Date.now() - storedMeal.lastConfirmed;
-                if (timeSinceLastConfirmed > oneWeek) {
-                    meal.probability = 1; // Reset probability after one week
-                }
-            }
-        });
-    }
-}
-        function removeMeal(button) {
-            const li = button.parentElement;
-            li.remove();
-        }
-
-// On page load, initialize meals and probabilities
-window.onload = loadMeals;
-
+    <script src="rndfood.js">
     </script>
-</body>
+  </body>
 </html>

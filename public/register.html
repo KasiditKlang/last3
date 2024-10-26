@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url('pic/bgLogin.png'); /* Adjust path as needed */
+            background-image: url('pic/bgLogin.png');
             background-repeat: no-repeat;
             background-size: cover;
             font-family: 'Istok Web', sans-serif;
@@ -19,11 +18,11 @@
         }
 
         .container {
-            background-color: #fff;
+            position: absolute;
+            left: 19%;
             padding: 30px;
             text-align: center;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 300px;
         }
 
@@ -34,7 +33,7 @@
         }
 
         .container input {
-            width: 100%;
+            width: 93%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -56,19 +55,8 @@
             background-color: #ff8a00;
         }
 
-        .login-link {
-            margin-top: 15px;
-            display: block;
-            font-size: 14px;
-        }
-
         .login-link a {
             color: #0046DC;
-            text-decoration: none;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -86,21 +74,29 @@
     </div>
 
     <script>
-        // Handle form submission for registration
-        document.getElementById("register-form").addEventListener("submit", function(event) {
-            event.preventDefault();  // Prevent page reload
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
 
-            const username = document.getElementById("reg-username").value;
-            const password = document.getElementById("reg-password").value;
+            try {
+                const res = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                });
 
-            // Store the registered user in localStorage
-            localStorage.setItem("registeredUsername", username);
-            localStorage.setItem("registeredPassword", password);
-
-            alert("Registration successful! Please log in.");
-
-            // Redirect to the login page
-            window.location.href = "loginResponsive.html";
+                const data = await res.json();
+                if (res.ok) {
+                    alert(data.message);
+                    window.location.href = 'loginResponsive.html';
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
         });
     </script>
 </body>

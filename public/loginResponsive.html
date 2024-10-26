@@ -5,159 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('pic/bgLogin.png'); /* Replace with actual image path */
-            background-repeat: no-repeat;
-            background-size: cover;
-            font-family: 'Istok Web', sans-serif;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            padding: 30px;
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            position: absolute; /* Enables positioning control */
-            top: 60px; /* Adjust this value to control the top offset */
-            left: 30%; /* Center horizontally */
-            transform: translateX(-50%); /* Center the container */
-        }
-
-        .logo img {
-            width: 100px; /* Adjust the size of the logo */
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .welcome-message {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .sub-message {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .container label {
-            font-size: 14px;
-            color: #333;
-            text-align: left;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .container input {
-            width: 80%;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 0 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .container input:focus {
-            border-color: #FFA733;
-        }
-
-        .checkbox-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 80%;
-            margin: 10px auto;
-        }
-
-        .checkbox-wrapper .left {
-            display: flex;
-            align-items: center;
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            margin-right: 10px;
-            transform: scale(0.5); /* Adjust checkbox size */
-        }
-
-        .signin-button {
-            background-color: #FFA733;
-            color: #fff;
-            font-size: 16px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 60%;
-            margin-bottom: 10px;
-        }
-
-        .signin-button:hover {
-            background-color: #ff8a00;
-        }
-
-        .text-control-input {
-            padding-left: 30px;
-        }
-
-        .or-text {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .google-signin-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #ffffff;
-            color: #000000;
-            font-size: 16px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            width: 60%;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .google-signin-button img {
-            margin-right: 10px;
-            width: 25px; /* Adjust the size of the logo */
-            height: auto;
-        }
-
-        .register {
-            font-size: 14px;
-            color: #333;
-        }
-
-        .register a {
-            color: #0046DC;
-            text-decoration: none;
-        }
-
-        .register a:hover {
-            text-decoration: underline;
-        }
-
-        .forgot-password {
-            color: #0046DC;
-            font-size: 12px;
-            text-decoration: none;
-            margin-top: -10px;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <div class="container">
@@ -167,46 +15,60 @@
         <div class="welcome-message">Welcome!</div>
         <div class="sub-message">Sign in to your account</div>
 
-        <form id="login-form">
-            <label for="fname" class="text-control-input">User:</label>
-            <input type="text" id="username" placeholder="Enter User name" required>
+        <form id="login-form" class="user">
+            <label for="username" class="text-control-input">User:</label>
+            <input type="text" id="username" name="username" placeholder="Enter User name" required>
 
-            <label for="lname" class="text-control-input">Password:</label>
-            <input type="password" id="password" placeholder="Enter password" required>
+            <label for="password" class="text-control-input">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+            <div class="checkbox-wrapper">
+                <label class="left">
+                    <input type="checkbox" id="remember" name="remember">
+                    <span>Remember me</span>
+                </label>
+            </div>
 
             <button type="submit" class="signin-button">SIGN IN</button>
         </form>
 
-        <p class="or-text">--------------------OR--------------------</p>
         <div class="register">
-            No account? <a href="register.html">Register</a>
+            <p>No register yet? <a href="register.html" class="get-started">Get started</a></p>
         </div>
     </div>
 
     <script>
-        // Handle form submission for login
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();  // Prevent page reload
+        async function loginUser(username, password) {
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+        const result = await response.json();
+        if (response.ok) {
+            alert('Login successful!');
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('authToken', result.token);
+            window.location.href = 'rndFood.html';
+        } else {
+            alert(result.error || 'Login failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+    }
+}
 
-            // Get stored credentials from localStorage
-            const storedUsername = localStorage.getItem("registeredUsername");
-            const storedPassword = localStorage.getItem("registeredPassword");
 
-            // Validate login
-            if (username === storedUsername && password === storedPassword) {
-                alert("Login successful!");
 
-                // Store login state
-                localStorage.setItem("isLoggedIn", "true");
 
-                // Redirect to the meal generator page
-                window.location.href = "rndFood.html";
-            } else {
-                alert("Invalid username or password. Please try again.");
-            }
+        document.getElementById('login-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            loginUser(username, password);
         });
     </script>
 </body>
