@@ -17,10 +17,12 @@ const allowedOrigins = [
     'https://vercel.com/api/toolbar/link/project-rndfood-gf9b.vercel.app?via=project-dashboard-alias-list&p=1&page=/' // Replace with your Vercel frontend URL
   ];
 
-app.use(
+  app.use(
     cors({
       origin: allowedOrigins,
-      credentials: true,
+      credentials: true, // Allow credentials such as cookies or Authorization headers
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
 // Increase payload size limit to handle large image uploads

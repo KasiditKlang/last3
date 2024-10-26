@@ -322,12 +322,7 @@
 
 
     <!-- Updated JS path -->
-    <script>
-
-const apiUrl = 
-  window.location.hostname.includes('localhost')
-    ? 'http://localhost:3000'
-    : 'https://vercel.com/api/toolbar/link/project-rndfood-gf9b.vercel.app?via=project-dashboard-alias-list&p=1&page=/'; // Adjust for Vercel    
+    <script>    
 
       if (localStorage.getItem("isLoggedIn") !== "true") {
     window.location.href = "loginResponsive.html";
@@ -361,7 +356,7 @@ let currentMeal = null;
 // Load meals from MongoDB
 async function loadMeals() {
     try {
-        const response = await fetch('${apiUrl}/api/meals', {
+        const response = await fetch('/api/meals', {
             headers: { 'Authorization': `Bearer ${getAuthToken()}` }
         });
         if (!response.ok) throw new Error('Failed to load meals from MongoDB');
